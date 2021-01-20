@@ -21,12 +21,11 @@ const CountryIndex = ({ shows }) => {
 // Execute before your component renders before the page
 // So it means that on the server-side whenever what happening
 // we don't have any access to client-side with a browser like hooks like useffect, router
-CountryIndex.getInitialProps = async () => {
-  // fetch data via the server-side with axios not client side
+CountryIndex.getInitialProps = async (context) => {
+  const country = context.query.country || "us"; // return the context path of query from [country]
   const response = await axios.get(
-    "http://api.tvmaze.com/schedule?country=US&date=2014-12-01"
+    `http://api.tvmaze.com/schedule?country=${country}&date=2014-12-01`
   );
-  console.log(`TCL: Home -> response ${response.data}`); // return log inside terminal
 
   return {
     shows: response.data,
