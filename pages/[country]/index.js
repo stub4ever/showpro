@@ -1,17 +1,26 @@
 import { useEffect } from "react";
 import axios from "axios";
 
-const CountryIndex = (props) => {
-  console.log(`TCL: Home -> props ${props.shows}`);
+const CountryIndex = ({ shows }) => {
+  const renderShows = () => {
+    return shows.map((showItem, index) => {
+      const { show } = showItem; // use destructor to get show object property
+      // return <li key={index}>{show.show.name}</li>;
+      return <li key={index}>{show.name}</li>;
+    });
+  };
 
   return (
     <>
-      <h1>This is country index page</h1>
+      <ul className="tv-shows">{renderShows()}</ul>
     </>
   );
 };
 
-// Initial as props
+// Initial as props => improve initial loading
+// Execute before your component renders before the page
+// So it means that on the server-side whenever what happening
+// we don't have any access to client-side with a browser like hooks like useffect, router
 CountryIndex.getInitialProps = async () => {
   // fetch data via the server-side with axios not client side
   const response = await axios.get(
