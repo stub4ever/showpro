@@ -23,6 +23,7 @@ const CountryIndex = ({ shows }) => {
 // we don't have any access to client-side with a browser like hooks like useffect, router
 CountryIndex.getInitialProps = async (context) => {
   const country = context.query.country || "us"; // return the context path of query from [country]
+  // Get country code => https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
   const response = await axios.get(
     `http://api.tvmaze.com/schedule?country=${country}&date=2014-12-01`
   );
