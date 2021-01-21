@@ -1,12 +1,20 @@
 import { useEffect } from "react";
 import axios from "axios";
+import Thumbnail from "../../components/Thumbnail";
 
 const CountryIndex = ({ shows }) => {
   const renderShows = () => {
     return shows.map((showItem, index) => {
       const { show } = showItem; // use destructor to get show object property
       // return <li key={index}>{show.show.name}</li>;
-      return <li key={index}>{show.name}</li>;
+      return (
+        <li key={index}>
+          <Thumbnail
+            imageUrl={(show.image && show.image.medium) || undefined}
+            caption={show.name}
+          />
+        </li>
+      );
     });
   };
 
@@ -27,7 +35,6 @@ CountryIndex.getInitialProps = async (context) => {
   const response = await axios.get(
     `http://api.tvmaze.com/schedule?country=${country}&date=2014-12-01`
   );
-
   return {
     shows: response.data,
     test: "Testing",
