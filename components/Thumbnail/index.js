@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ThumbnailStyles from "./styles";
 
 const Thumbnail = ({
@@ -7,8 +8,14 @@ const Thumbnail = ({
   return (
     <>
       <div className="thumbnail">
-        <img className="thumbnail__image" src={imageUrl}></img>
-        <h3 className="thumbnail__caption">{caption}</h3>
+        {/* href="/[country]/[id]" */}
+        {/* Currently the linked page reload completely, you can update the client-side without complete fetch on the server-side */}
+        <Link href="/us/5617">
+          <a>
+            <img className="thumbnail__image" src={imageUrl}></img>
+            <h3 className="thumbnail__caption">{caption}</h3>
+          </a>
+        </Link>
 
         <style jsx>{ThumbnailStyles}</style>
       </div>
