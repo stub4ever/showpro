@@ -10,7 +10,7 @@ const CountryIndex = ({ shows }) => {
       return (
         <li key={index}>
           <Thumbnail
-            imageUrl={(show.image && show.image.medium) || undefined}
+            imageUrl={(show.image && show.image.medium) || undefined} // if the image is null and ...
             caption={show.name}
           />
         </li>

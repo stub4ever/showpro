@@ -1,6 +1,9 @@
 import ThumbnailStyles from "./styles";
 
-const Thumbnail = ({ imageUrl, caption }) => {
+const Thumbnail = ({
+  imageUrl = "https://via.placeholder.com/210x295?text=?", // add default fallback
+  caption,
+}) => {
   return (
     <>
       <div className="thumbnail">
