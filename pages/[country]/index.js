@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import Thumbnail from "../../components/Thumbnail";
 
-const CountryIndex = ({ shows }) => {
+const CountryIndex = ({ shows, country }) => {
   const renderShows = () => {
     return shows.map((showItem, index) => {
       const { show } = showItem; // use destructor to get show object property
@@ -10,6 +10,9 @@ const CountryIndex = ({ shows }) => {
       return (
         <li key={index}>
           <Thumbnail
+            href="/[country]/[showId]"
+            // as="/us/5617"
+            as={`/${country}/${show.id}`}
             imageUrl={(show.image && show.image.medium) || undefined} // if the image is null and ...
             caption={show.name}
           />
@@ -37,6 +40,7 @@ CountryIndex.getInitialProps = async (context) => {
   );
   return {
     shows: response.data,
+    country, // add dynamic country path
     test: "Testing",
   };
 };
