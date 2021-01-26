@@ -1,8 +1,9 @@
 import axios from "axios";
 import parse from "html-react-parser";
+import Cast from "../../components/Cast";
 
 const ShowDetails = ({ show }) => {
-  const { name, image, summary } = show;
+  const { name, image, summary, _embedded } = show;
 
   return (
     <div className="show-details">
@@ -12,6 +13,7 @@ const ShowDetails = ({ show }) => {
       ></div>
       <h1>{name}</h1>
       {parse(summary)} {/* Parse html */}
+      <Cast cast={_embedded.cast} />
       <style jsx>{`
         .show-details__poster {
           height: 200px;
