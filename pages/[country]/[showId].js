@@ -21,12 +21,27 @@ const ShowDetails = ({ show }) => {
   );
 };
 
-ShowDetails.getInitialProps = async () => {
-  const response = await axios.get(`https://api.tvmaze.com/shows/1?embed=cast`);
+// the latest version of Next.js and now the documentation recommends us to use getServerSideProps instead of getInitialProps.
+export const getServerSideProps = async ({ query }) => {
+  const { showId } = query;
 
-  return {
-    show: response.data,
-  };
+  try {
+    const response = await axios.get(
+      `https://api.tvmaze.com/shows/1?embed=cast`
+    );
+
+    return {
+      props: {
+        show: response.data,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        error: error.error,
+      },
+    };
+  }
 };
 
 // /[country]/[id]  => /US/32332 , /EN/32344
