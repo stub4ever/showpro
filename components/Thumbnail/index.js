@@ -1,11 +1,12 @@
 import Link from "next/link";
-import ThumbnailStyles from "./styles";
+// import ThumbnailStyles from "./styles";
 
 const Thumbnail = ({
   imageUrl = "https://via.placeholder.com/210x295?text=?", // add default fallback
   caption,
   href = "", // default empty string
   as = "", // default empty string
+  small = false,
 }) => {
   return (
     <>
@@ -19,7 +20,15 @@ const Thumbnail = ({
           </a>
         </Link>
 
-        <style jsx>{ThumbnailStyles}</style>
+        {/* <style jsx>{ThumbnailStyles}</style> */}
+        <style jsx>{`
+          .thumbnail__image {
+            width: ${small ? "100px" : "100%"};
+          }
+          .thumbnail__caption {
+            text-align: center;
+          }
+        `}</style>
       </div>
     </>
   );

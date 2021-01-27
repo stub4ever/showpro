@@ -23,7 +23,19 @@ const CountryIndex = ({ shows, country }) => {
 
   return (
     <>
-      <ul className="tv-shows">{renderShows()}</ul>
+      <ul className="tvshows-grid">
+        {renderShows()}
+
+        <style jsx>{`
+          .tvshows-grid {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+          }
+        `}</style>
+      </ul>
     </>
   );
 };

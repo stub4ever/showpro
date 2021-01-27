@@ -3,7 +3,7 @@ import Thumbnail from "../Thumbnail";
 const Cast = ({ cast }) => {
   const renderCast = () => {
     return cast.map((castItem, index) => {
-      const { image, name } = castItem.person;
+      const { image, name } = castItem.person; // return person
 
       return (
         <li key={index}>
@@ -26,6 +26,8 @@ const Cast = ({ cast }) => {
         .cast__list {
           display: flex;
           overflow-x: scroll;
+          list-style: none;
+          padding-left: 0;
         }
         .cast__list > :global(li) {
           margin-right: 10px;
