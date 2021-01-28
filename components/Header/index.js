@@ -1,3 +1,6 @@
+// Get current selected country from the URL we need to include useRouter
+import { useRouter } from "next/router";
+
 const countries = [
   {
     label: "us",
@@ -10,6 +13,10 @@ const countries = [
 ];
 
 const Header = () => {
+  const router = useRouter();
+  // console.log("TCL: Header -> router : ", router);
+  console.log("TCL: Header -> router : ", router.query.country);
+
   // return a current value from select
   const handleChange = (e) => {
     console.log("selected country : ", e.target.value);
@@ -27,7 +34,10 @@ const Header = () => {
 
   return (
     <div className="header">
-      <select onChange={handleChange}>
+      {/* Set value default to us */}
+      {/* <select value="us" onChange={handleChange}> */}
+      {/* Return by default the value path of the current page -> need to fix is currently not changable */}
+      <select value={router.query.country} onChange={handleChange}>
         {/* <option value="us">United states</option> */}
         {/* <option value="br">Brazil</option> */}
         {renderCountries()}
