@@ -13,7 +13,8 @@ const ShowDetails = ({ show }) => {
       ></div>
       <h1>{name}</h1>
       {parse(summary)} {/* Parse html */}
-      <Cast cast={_embedded.cast} />
+      {/* Show only if it has Cast item */}
+      {_embedded.cast.length > 0 && <Cast cast={_embedded.cast} />}
       <style jsx>{`
         .show-details__poster {
           height: 200px;
@@ -27,10 +28,11 @@ const ShowDetails = ({ show }) => {
 // the latest version of Next.js and now the documentation recommends us to use getServerSideProps instead of getInitialProps.
 export const getServerSideProps = async ({ query }) => {
   const { showId } = query;
+  // console.log(query) // return country and showId
 
   try {
     const response = await axios.get(
-      `https://api.tvmaze.com/shows/1?embed=cast`
+      `https://api.tvmaze.com/shows/${showId}?embed=cast`
     );
 
     return {
