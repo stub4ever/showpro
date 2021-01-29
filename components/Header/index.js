@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 // Get current selected country from the URL we need to include useRouter
 import { useRouter } from "next/router";
 
@@ -14,12 +16,13 @@ const countries = [
 
 const Header = () => {
   const router = useRouter();
+  const [selectedCountry, setSelectedCountry] = useState(router.query.country); // Init by default the query path of the current country page
   // console.log("TCL: Header -> router : ", router);
   console.log("TCL: Header -> router : ", router.query.country);
 
   // return a current value from select
   const handleChange = (e) => {
-    console.log("selected country : ", e.target.value);
+    setSelectedCountry(e.target.value); // set selected country to selected value
   };
 
   const renderCountries = () => {
@@ -36,8 +39,9 @@ const Header = () => {
     <div className="header">
       {/* Set value default to us */}
       {/* <select value="us" onChange={handleChange}> */}
-      {/* Return by default the value path of the current page -> need to fix is currently not changable */}
-      <select value={router.query.country} onChange={handleChange}>
+      {/* Return by default the value path of the current page -> need to fix select input isn't  changable */}
+      {/* <select value={router.query.country} onChange={handleChange}> */}
+      <select value={selectedCountry} onChange={handleChange}>
         {/* <option value="us">United states</option> */}
         {/* <option value="br">Brazil</option> */}
         {renderCountries()}
