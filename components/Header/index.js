@@ -23,6 +23,11 @@ const Header = () => {
   // return a current value from select
   const handleChange = (e) => {
     setSelectedCountry(e.target.value); // set selected country to selected value
+
+    // Navigate back to country
+    // Push is method of router to redirect us back to a page with specfic country
+    // router.push(`/${e.target.value}`); // Using only the url parameter will refresh the entire browser
+    router.push(`/[country]`, `/${e.target.value}`); // use 2 parametes (the path of router and url for the browser) will applied refresh only on the clientside
   };
 
   const renderCountries = () => {
