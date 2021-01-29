@@ -30,23 +30,15 @@ export const getServerSideProps = async ({ query }) => {
   const { showId } = query;
   // console.log(query) // return country and showId
 
-  try {
-    const response = await axios.get(
-      `https://api.tvmaze.com/shows/${showId}?embed=cast`
-    );
+  const response = await axios.get(
+    `https://api.tvmaze.com/shows/${showId}?embed=cast`
+  );
 
-    return {
-      props: {
-        show: response.data,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        error: error.error,
-      },
-    };
-  }
+  return {
+    props: {
+      show: response.data,
+    },
+  };
 };
 
 // /[country]/[id]  => /US/32332 , /EN/32344

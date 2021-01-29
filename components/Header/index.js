@@ -18,7 +18,7 @@ const Header = () => {
   const router = useRouter();
   const [selectedCountry, setSelectedCountry] = useState(router.query.country); // Init by default the query path of the current country page
   // console.log("TCL: Header -> router : ", router);
-  console.log("TCL: Header -> router : ", router.query.country);
+  // console.log("TCL: Header -> router : ", router.query.country);
 
   // return a current value from select
   const handleChange = (e) => {
