@@ -2,14 +2,19 @@ import axios from "axios";
 import parse from "html-react-parser";
 import Cast from "../../components/Cast";
 import Error from "next/error"; // error handeling by next
+import CustomError from "../_error";
 
 const ShowDetails = ({ show = {}, statusCode }) => {
   const { name, image, summary, _embedded } = show;
 
-  // Error handling
   if (statusCode) {
     // return <h1>There was an error</h1>;
-    return <Error statusCode={statusCode} title="Oopsie! Error"></Error>;
+
+    // Default error handling
+    //return <Error statusCode={statusCode} title="Oopsie! Error"></Error>;
+
+    // Custom handling
+    return <CustomError statusCode={statusCode}></CustomError>;
   }
 
   return (
