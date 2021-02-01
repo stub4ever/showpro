@@ -1,9 +1,16 @@
 import axios from "axios";
 import parse from "html-react-parser";
 import Cast from "../../components/Cast";
+import Error from "next/error"; // error handeling by next
 
-const ShowDetails = ({ show }) => {
+const ShowDetails = ({ show = {}, statusCode }) => {
   const { name, image, summary, _embedded } = show;
+
+  // Error handling
+  if (statusCode) {
+    // return <h1>There was an error</h1>;
+    return <Error statusCode={statusCode} title="Oopsie! Error"></Error>;
+  }
 
   return (
     <div className="show-details">
@@ -30,15 +37,33 @@ export const getServerSideProps = async ({ query }) => {
   const { showId } = query;
   // console.log(query) // return country and showId
 
-  const response = await axios.get(
-    `https://api.tvmaze.com/shows/${showId}?embed=cast`
-  );
+  // const response = await axios.get(
+  //   `https://api.tvmaze.com/shows/${showId}?embed=cast`
+  // );
 
-  return {
-    props: {
-      show: response.data,
-    },
-  };
+  // return {
+  //   props: {
+  //     show: response.data,
+  //   },
+  // };
+
+  try {
+    const response = await axios.get(
+      `https://api.tvmaze.com/shows/${showId}?embed=cast`
+    );
+
+    return {
+      props: {
+        show: response.data,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        statusCode: error.response ? error.response.status : 500, // if not response error status return 500 error
+      },
+    };
+  }
 };
 
 // /[country]/[id]  => /US/32332 , /EN/32344
