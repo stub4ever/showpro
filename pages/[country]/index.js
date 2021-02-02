@@ -1,8 +1,20 @@
 import { useEffect } from "react";
 import axios from "axios";
 import Thumbnail from "../../components/Thumbnail";
+import Error from "next/error"; // error handeling by next
+import CustomError from "../_error";
 
-const CountryIndex = ({ shows, country }) => {
+const CountryIndex = ({ shows, country, statusCode }) => {
+  if (statusCode) {
+    // return <h1>There was an error</h1>;
+
+    // Default error handling
+    //return <Error statusCode={statusCode} title="Oopsie! Error"></Error>;
+
+    // Custom handling
+    return <CustomError statusCode={statusCode}></CustomError>;
+  }
+
   const renderShows = () => {
     return shows.map((showItem, index) => {
       const { show } = showItem; // use destructor to get show object property
@@ -59,19 +71,26 @@ const CountryIndex = ({ shows, country }) => {
 
 // the latest version of Next.js and now the documentation recommends us to use getServerSideProps instead of getInitialProps.
 export const getServerSideProps = async ({ query }) => {
-  const country = query.country || "us"; // return the context path of query from [country]
-  // Get country code => https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
-  const response = await axios.get(
-    `http://api.tvmaze.com/schedule?country=${country}&date=2014-12-01`
-  );
-
-  return {
-    props: {
-      shows: response.data,
-      country, // add dynamic country path
-      test: "Testing",
-    },
-  };
+  try {
+    const country = query.country || "us"; // return the context path of query from [country]
+    // Get country code => https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
+    const response = await axios.get(
+      `http://api.tvmaze.com/schedule?country=${country}&date=2014-12-01`
+    );
+    return {
+      props: {
+        shows: response.data,
+        country, // add dynamic country path
+        test: "Testing",
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        statusCode: error.response ? error.response.status : 500,
+      },
+    };
+  }
 };
 
 // /[country]/  => /US/ , /EN/
