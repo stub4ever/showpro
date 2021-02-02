@@ -13,3 +13,11 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps = (context) => {
+  console.log("browser", process.browser); // using process.browser to test if page is using client-side
+
+  return {
+    test: "testing",
+  };
+};
