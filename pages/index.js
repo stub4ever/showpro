@@ -1,23 +1,19 @@
 import Head from "next/head";
+import Router from "next/router";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <h1>This is home page</h1>
-    </div>
-  );
+  return null;
 }
 
 export const getServerSideProps = (context) => {
-  console.log("browser", process.browser); // using process.browser to test if page is using client-side
+  const country = context.query.country || "us"; // return 'us'
 
-  return {
-    test: "testing",
-  };
+  // console.log("browser", process.browser); // using process.browser to test if page is using client-side
+
+  process.browser
+    ? Router.replace("/[country]", `${country}`) // if browser is client-side return path
+    : context.res.writeHead(302, { Location: `/${country}` }); // else redirect server-side => code 302 means redirect
+
+  context.res.end(); // Call the response is finished else it will loading forever
 };
