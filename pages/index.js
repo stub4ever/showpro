@@ -16,4 +16,8 @@ export const getServerSideProps = (context) => {
     : context.res.writeHead(302, { Location: `/${country}` }); // else redirect server-side => code 302 means redirect
 
   context.res.end(); // Call the response is finished else it will loading forever
+
+  return {
+    props: {},
+  };
 };

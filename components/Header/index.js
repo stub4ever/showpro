@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import cookies from "nookies";
 
 // Get current selected country from the URL we need to include useRouter
 import { useRouter } from "next/router";
@@ -39,6 +40,17 @@ const Header = () => {
       );
     });
   };
+
+  // Whenever country get selected a effect is going to be applied
+  useEffect(() => {
+    if (selectedCountry) {
+      cookies.set(null, "defaultCountry", selectedCountry, {
+        // key: defaultCountry value: selectedCountry
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      });
+    }
+  }, [selectedCountry]);
 
   return (
     <div className="header">
