@@ -3,6 +3,7 @@ import axios from "axios";
 import Thumbnail from "../../components/Thumbnail";
 import Error from "next/error"; // error handeling by next
 import CustomError from "../_error";
+import cookies from "nookies";
 
 const CountryIndex = ({ shows, country, statusCode }) => {
   if (statusCode) {
@@ -70,9 +71,12 @@ const CountryIndex = ({ shows, country, statusCode }) => {
 // };
 
 // the latest version of Next.js and now the documentation recommends us to use getServerSideProps instead of getInitialProps.
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async (context) => {
+  const myAppCookies = cookies.get(context);
+
   try {
-    const country = query.country || "us"; // return the context path of query from [country]
+    const { defaultCountry } = cookies.get(context);
+    const country = context.query.country || defaultCountry || "us"; // return the context path of query from [country]
     // Get country code => https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
     const response = await axios.get(
       `http://api.tvmaze.com/schedule?country=${country}&date=2014-12-01`

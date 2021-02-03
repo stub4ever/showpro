@@ -1,13 +1,20 @@
 import Head from "next/head";
 import Router from "next/router";
 import styles from "../styles/Home.module.css";
+import cookies from "nookies";
 
 export default function Home() {
   return null;
 }
 
 export const getServerSideProps = (context) => {
-  const country = context.query.country || "us"; // return 'us'
+  const { defaultCountry } = cookies.get(context);
+  const country = context.query.country || defaultCountry || "us"; // return 'us'
+  // const myAppCookies = cookies.get(context);
+  // console.log(
+  //   "🚀 ~ file: index.js ~ line 76 ~ getServerSideProps ~ myAppCookies",
+  //   myAppCookies
+  // ); // show terminal
 
   // console.log("browser", process.browser); // using process.browser to test if page is using client-side
 
